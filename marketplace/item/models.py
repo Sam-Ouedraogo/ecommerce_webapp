@@ -16,7 +16,7 @@ class Category(models.Model):
     
     
 class Item(models.Model):
-    Category = models.ForeignKey(Category, related_name='items', on_delete=models.CASCADE) # If user deletes category, all items in that category are being deleted
+    category = models.ForeignKey(Category, related_name='items', on_delete=models.CASCADE) # If user deletes category, all items in that category are being deleted
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     price = models.FloatField()
