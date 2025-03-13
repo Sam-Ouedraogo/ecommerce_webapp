@@ -7,6 +7,18 @@ from .forms import NewItemForm, EditItemForm
 
 # Create your views here.
 
+def items(request):
+    query = request.GET.get('query', "")
+    items = Item.objects.filter(is_sold=False)
+    
+    if query:
+        items = items.filter(name__icontain=query)
+        
+    return render(request, 'item/items.html', {
+        'item': items,
+        'query': query
+    })
+
 def detail(request, pk):
     item = get_object_or_404(Item, pk = pk)
     related_items = Item.objects.filter(category = item.category, is_sold=False).exclude(pk=pk)[0:3]
